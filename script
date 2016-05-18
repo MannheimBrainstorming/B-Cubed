@@ -1,6 +1,10 @@
 #Reading the gold standard file
 read_gold_csv = open ("result-T1-Q1.csv", "r+")
 
+#Reading the predicted cluster file
+read_result = open ("test18.csv", "r+")
+
+
 #an array keeping the doc line by line
 doc=[]
 
@@ -60,7 +64,6 @@ read_gold_csv.close()
 
 
 #Reading the result cluster file
-read_result = open ("test18.csv", "r+")
 doc1=[]
 
 #humber of lines in the doc1
@@ -163,3 +166,6 @@ print ("@@@@")
 Recall=TP/(TP+FN)
 print ("Recall")
 print (Recall)
+F1Score=(2*Precision*Recall)/(Precision+Recall)
+print ("F1 Score")
+print (F1Score)
