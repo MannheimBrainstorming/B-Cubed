@@ -1,0 +1,173 @@
+#Reading the gold standard file
+read_gold_csv = open ("result-T1-Q1.csv", "r+")
+
+#Reading the predicted cluster file
+read_result = open ("test18.csv", "r+")
+
+
+#an array keeping the doc line by line
+doc=[]
+
+#humber of lines in the doc
+line_count=0
+
+#counte the number of lines in the doc and copy each line to a row of the array
+for line in iter(read_gold_csv):
+	doc.append(line)
+	line_count=line_count+1
+
+#create an array with two columns. column one foe the cluster and column two for the number of the cluster
+cluster=[["" for a in range(2)] for b in range(line_count)]
+
+#copy only cluster1(column2) in doc variale to the cluster array 
+odd=0
+for counter1 in range(line_count):
+	for letter in doc[counter1]:
+		if odd==3:
+			break
+		if letter=='|':
+			odd=odd+1
+		if odd==2:
+			if letter!='|':
+				cluster[counter1][0]=cluster[counter1][0]+letter
+	odd=0
+
+#assign a number to the cluster
+clus_num=0
+for counter2 in range(line_count):
+	for counter3 in range(line_count):
+		if counter2!=counter3:
+			if cluster[counter3][1]=="":
+				if cluster[counter2][0]==cluster[counter3][0]:
+					cluster[counter2][1]=clus_num
+					cluster[counter3][1]=clus_num
+	clus_num=clus_num+1
+
+#assigning a number to the sing-cluster lines
+puf=2000
+for i in range(len(cluster)-1):
+        if i!=0:
+                if cluster[i][1]=="":
+                        cluster[i][1]=puf
+                        puf=puf+1
+
+
+
+
+
+
+read_gold_csv.close()
+
+#########################################################
+#result file
+########################################################
+
+
+#Reading the result cluster file
+doc1=[]
+
+#humber of lines in the doc1
+line_count=0
+
+#counte the number of lines in the doc1 and copy each line into a row of the array
+for line in iter(read_result):
+        doc1.append(line)
+        line_count=line_count+1
+
+
+#create an array with two columns. column one foe the cluster and column two for the number of the cluster
+cluster1=[["" for a in range(2)] for b in range(line_count)]
+
+#copy only cluster1(column2) in doc variale to the cluster array 
+odd=0
+bk=0
+
+for counter1 in range(line_count):
+        for letter in doc1[counter1]:
+                if letter=='|':
+                        odd=odd+1
+                if odd==1:
+                        if letter!='|':
+                                cluster1[counter1][0]=cluster1[counter1][0]+letter
+        odd=0
+
+
+#assign a number to the cluster1
+clus_num=0
+cleaner=0
+for counter2 in range(line_count):
+	for counter3 in range(line_count):
+		if counter2!=counter3:
+			if cluster1[counter3][1]=="":
+				if cluster1[counter2][0]==cluster1[counter3][0]:
+					cluster1[counter2][1]=clus_num
+					cluster1[counter3][1]=clus_num
+	clus_num=clus_num+1
+
+#assigning a number to the sing-cluster lines
+puf=2000
+for i in range(len(cluster1)-1):
+	if i!=0:
+		if cluster1[i][1]=="":
+			cluster1[i][1]=puf
+			puf=puf+1
+
+
+read_result.close()
+
+
+#calculate TP, FN, FP, TN
+i=1
+j=i+1
+TP=0
+FN=0
+FP=0
+TN=0
+mem=0
+while (i < line_count):
+	while (j < line_count):
+		if cluster[i][1]==cluster[j][1] and cluster1[i][1]==cluster1[j][1]:
+			TP=TP+1
+			mem=1
+		if cluster[i][1]==cluster[j][1] and cluster1[i][1]!=cluster1[j][1] and mem==0:
+			FN=FN+1
+			mem=1
+		if cluster[i][1]!=cluster[j][1] and cluster1[i][1]==cluster1[j][1] and mem==0:
+			FP=FP+1
+			mem=1
+		if cluster[i][1]!=cluster[j][1] and cluster1[i][1]!=cluster1[j][1] and mem==0:
+			TN=TN+1
+		j=j+1
+		mem=0
+	i=i+1
+	j=i+1
+
+print ("TP:")
+print (TP)
+print ("@@@@@@@@")
+print ("FP:")
+print (FP)
+print ("@@@@@@@@")
+print ("FN:")
+print (FN)
+print ("@@@@@@@@")
+print ("TN:")
+print (TN)
+print ("@@@@@@@@")
+Accuracy= (TP+TN)/(TP+TN+FP+FN)
+print ("Accuracy:")
+print(Accuracy)
+print ("@@@@@@@@")
+Precision=TP/(TP+FP)
+print ("Precision:")
+print (Precision)
+print ("@@@@@@@@")
+Recall=TP/(TP+FN)
+print ("Recall")
+print (Recall)
+F1Score=(2*Precision*Recall)/(Precision+Recall)
+print ("F1 Score")
+print (F1Score)
+
+
+
