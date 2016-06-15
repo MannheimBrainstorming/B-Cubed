@@ -176,7 +176,7 @@ def calculation(Gold_standard_name, Clustering_name, Gold_count):
 			mem=0
 		i=i+1
 		j=i+1
-	return (TP,FP,FN,TN)
+	return (TP,FN,FP,TN)
 
 
 def create_exel(row,col,TP,FN,FP,TN,worksheet):
@@ -237,7 +237,7 @@ def generate_column_names(worksheet):
 	worksheet.write(1,14,"F1Score")
 
 def main():
-	Gold_standard_name = "T1Q4F10.csv"
+	Gold_standard_name = "T1Q1F10.csv"
 	#Reading the gold standard file
 	read_gold_csv_new = open (Gold_standard_name, "r+")
 	#an array keeping the doc line by line
@@ -254,9 +254,9 @@ def main():
 	FlattenCL5 = "FlattenCL5.csv"
 	FlattenCL6 = "FlattenCL6.csv"
 	FlattenSL3 = "FlattenSL3.csv"
-	FlattenSL4 = "FlattenSL3.csv"
-	FlattenSL5 = "FlattenSL3.csv"
-	FlattenSL6 = "FlattenSL3.csv"
+	FlattenSL4 = "FlattenSL4.csv"
+	FlattenSL5 = "FlattenSL5.csv"
+	FlattenSL6 = "FlattenSL6.csv"
 	KM3 = "KM3.csv"
 	KM4 = "KM4.csv"
 	KM5 = "KM5.csv"
@@ -281,7 +281,7 @@ def main():
 	col3=11
 
 	#create an exel sheet
-	workbook = xlsxwriter.Workbook('Result_Clustering.xlsx')
+	workbook = xlsxwriter.Workbook(Gold_standard_name+'.xlsx')
 	worksheet = workbook.add_worksheet()
 
 	#writing name of the columns
@@ -384,6 +384,86 @@ def main():
 	if 'cluster3' in doc_new[0]:
 		Gold_count=2
 		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenCL6, Gold_count)
+		create_exel(row3,col3,TP,FN,FP,TN,worksheet)
+		row3 += 1
+		col3 = 11
+
+	worksheet.write(row,0,"FlattenSL3")
+	if 'cluster1' in doc_new[0]:
+		Gold_count=1
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL3, Gold_count)
+		create_exel(row,col,TP,FN,FP,TN,worksheet)
+		row += 1
+		col = 1
+	if 'cluster2' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL3, Gold_count)
+		create_exel(row2,col2,TP,FN,FP,TN,worksheet)
+		row2 += 1
+		col2 = 6
+	if 'cluster3' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL3, Gold_count)
+		create_exel(row3,col3,TP,FN,FP,TN,worksheet)
+		row3 += 1
+		col3 = 11
+
+	worksheet.write(row,0,"FlattenSL4")
+	if 'cluster1' in doc_new[0]:
+		Gold_count=1
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL4, Gold_count)
+		create_exel(row,col,TP,FN,FP,TN,worksheet)
+		row += 1
+		col = 1
+	if 'cluster2' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL4, Gold_count)
+		create_exel(row2,col2,TP,FN,FP,TN,worksheet)
+		row2 += 1
+		col2 = 6
+	if 'cluster3' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL4, Gold_count)
+		create_exel(row3,col3,TP,FN,FP,TN,worksheet)
+		row3 += 1
+		col3 = 11
+
+	worksheet.write(row,0,"FlattenSL5")
+	if 'cluster1' in doc_new[0]:
+		Gold_count=1
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL5, Gold_count)
+		create_exel(row,col,TP,FN,FP,TN,worksheet)
+		row += 1
+		col = 1
+	if 'cluster2' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL5, Gold_count)
+		create_exel(row2,col2,TP,FN,FP,TN,worksheet)
+		row2 += 1
+		col2 = 6
+	if 'cluster3' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL5, Gold_count)
+		create_exel(row3,col3,TP,FN,FP,TN,worksheet)
+		row3 += 1
+		col3 = 11
+
+	worksheet.write(row,0,"FlattenSL6")
+	if 'cluster1' in doc_new[0]:
+		Gold_count=1
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL6, Gold_count)
+		create_exel(row,col,TP,FN,FP,TN,worksheet)
+		row += 1
+		col = 1
+	if 'cluster2' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL6, Gold_count)
+		create_exel(row2,col2,TP,FN,FP,TN,worksheet)
+		row2 += 1
+		col2 = 6
+	if 'cluster3' in doc_new[0]:
+		Gold_count=2
+		TP, FN, FP, TN = calculation(Gold_standard_name, FlattenSL6, Gold_count)
 		create_exel(row3,col3,TP,FN,FP,TN,worksheet)
 		row3 += 1
 		col3 = 11
